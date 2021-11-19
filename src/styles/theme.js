@@ -5,10 +5,12 @@ const theme = {
   colors:
     {
       bg: '#E5E5E5',
+      iconbg: '#EDEDED;',
       unactive: '#B1B1B1',
       like: '#EB434D',
-      textPrimary: '#A4A4A4',
-      textSecondary: '#676767',
+      textPrimary: '#000000',
+      textSecondary: '#000000',
+      button: '#287F9A',
     },
   sizes:
     {
@@ -16,7 +18,8 @@ const theme = {
         {
           item: '440px',
           avatar: '110px',
-          container: '1000px',
+          container: '930px',
+          modalwindow: '420px',
         },
       elems:
         {
@@ -26,7 +29,8 @@ const theme = {
         {
           mainTitle: '44px',
           bookName: '20px',
-          desc: '16px',
+          author: '16px',
+          button: '20px',
         },
     },
   fonts:
