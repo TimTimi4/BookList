@@ -1,3 +1,4 @@
+import { useState } from 'react/cjs/react.development'
 import styled from 'styled-components'
 import IconBtn from '../Buttons/IconBtn'
 import Like from '../Icons/Like'
@@ -37,24 +38,54 @@ const StyledTrashIcon = styled(IconBtn)`
   bottom: 31px;
 `
 
-const BookItem = ({ name, author, isFavorite }) => (
-// const [isLike, setLike] = useState(isFavorite)
-// const [loading, setLoading] = useState(false)
-// const [error, setError] = useState('')
-  <Wrapper>
-    <BookName>
-      {name}
-    </BookName>
-    <StyledAuthor>
-      {author}
-    </StyledAuthor>
-    <StyledLikeIcon isFavorite={isFavorite}>
-      <Like />
-    </StyledLikeIcon>
-    <StyledTrashIcon>
-      <Trash />
-    </StyledTrashIcon>
-  </Wrapper>
-)
+const Error = styled.div`
+  position: absolute;
+  right: 31px;
+  top: 65px;
+  font-size: ${({ theme }) => theme.sizes.fonts.infoMessage};
+`
 
+const BookItem = ({ id, name, author, isFavorite }) => {
+  const [isLike, setLike] = useState(isFavorite)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleChangeFavorite = () => {
+    setLoading(true)
+    fetch(`http://localhost:1717/books/update/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ isFavorite: !isLike }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(() => {
+        setLike(!isLike)
+        setError('')
+      })
+      .catch(() => {
+        setError('unknown error')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+  return (
+    <Wrapper>
+      <BookName>
+        {name}
+      </BookName>
+      <StyledAuthor>
+        {author}
+      </StyledAuthor>
+      <StyledLikeIcon isFavorite={isLike} onClick={handleChangeFavorite} disabled={loading}>
+        {loading ? '?' : <Like />}
+      </StyledLikeIcon>
+      <Error>{error}</Error>
+      <StyledTrashIcon>
+        <Trash />
+      </StyledTrashIcon>
+    </Wrapper>
+  )
+}
 export default BookItem

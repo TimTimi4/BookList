@@ -8,19 +8,18 @@ const StyledIcon = styled.button`
   position: relative;
   cursor: pointer;
   border: 0;
-`
-const StyledIconInner = styled.div`
-  position: absolute;
-  top: 11px;
-  left: 10px;
+  line-height: 0px;
   color: ${({ isFavorite, theme }) => (isFavorite ? theme.colors.like : theme.colors.unactive)};
 `
 
-const IconBtn = ({ children, className, type, onClick, isFavorite }) => (
-  <StyledIcon className={className} type={type || 'button'} onClick={onClick}>
-    <StyledIconInner isFavorite={isFavorite}>
-      { children }
-    </StyledIconInner>
+const IconBtn = ({ children, type = 'button', onClick, isFavorite, ...props }) => (
+  <StyledIcon
+    type={type}
+    onClick={onClick}
+    isFavorite={isFavorite}
+    {...props}
+  >
+    { children }
   </StyledIcon>
 )
 

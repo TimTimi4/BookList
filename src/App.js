@@ -4,6 +4,7 @@ import Theme from './styles/theme'
 import Container from './components/Container'
 import BookRow from './components/BookRow'
 import AddBookBtn from './components/Buttons/AddBookBtn'
+import CreateModal from './components/CreateModal'
 
 const MainTitle = styled.h2`
   font-size: ${({ theme }) => theme.sizes.fonts.mainTitle};
@@ -12,8 +13,8 @@ const MainTitle = styled.h2`
 `
 
 const App = () => {
+  const [isShowCreateModal, setShowCreateModal] = useState(false)
   const [books, setBooks] = useState([])
-
   useEffect(() => {
     fetch('http://localhost:1717/books')
       .then((res) => res.json())
@@ -27,7 +28,16 @@ const App = () => {
       <Container>
         <MainTitle>Список книг</MainTitle>
         <BookRow list={books} />
-        <AddBookBtn type="button">Добавить книгу</AddBookBtn>
+        <AddBookBtn
+          onClick={() => setShowCreateModal(true)}
+          type="button"
+        >
+          Добавить книгу
+        </AddBookBtn>
+        <CreateModal
+          isOpen={isShowCreateModal}
+          onClose={() => setShowCreateModal(false)}
+        />
       </Container>
     </Theme>
   )

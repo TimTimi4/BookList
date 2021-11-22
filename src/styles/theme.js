@@ -31,6 +31,7 @@ const theme = {
           bookName: '20px',
           author: '16px',
           button: '20px',
+          infoMessage: '12px',
         },
     },
   fonts:

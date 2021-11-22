@@ -13,6 +13,7 @@ const BookRow = ({ list }) => (
       list.map((item) => (
         <BookItem
           key={item.id}
+          id={item.id}
           name={item.name}
           author={item.author}
           isFavorite={item.isFavorite}

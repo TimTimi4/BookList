@@ -13,7 +13,7 @@ const StyledButton = styled.button`
   display: block;
 `
 
-const AddBookBtn = ({ children, className, type, onClick }) => (
+const AddBookBtn = ({ children, className, type = 'button', onClick }) => (
   <StyledButton className={className} type={type} onClick={onClick}>
     { children }
   </StyledButton>
