@@ -40,21 +40,26 @@ const StyledTrashIcon = styled(IconItem)`
   bottom: 31px;
 `
 
-const BookItem = ({ name, author }) => (
-  <Wrapper>
-    <StyledBookName>
-      {name}
-    </StyledBookName>
-    <StyledAuthor>
-      {author}
-    </StyledAuthor>
-    <StyledLikeIcon type="button">
-      <Like />
-    </StyledLikeIcon>
-    <StyledTrashIcon type="button">
-      <Trash />
-    </StyledTrashIcon>
-  </Wrapper>
-)
+const BookItem = ({ id, name, author, isFavorite }) => {
+  const [isLike, setLike] = useState(isFavorite)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  return (
+    <Wrapper>
+      <StyledBookName>
+        {name}
+      </StyledBookName>
+      <StyledAuthor>
+        {author}
+      </StyledAuthor>
+      <StyledLikeIcon type="button" isFavorite={isFavorite} onClick={handleClick}>
+        <Like />
+      </StyledLikeIcon>
+      <StyledTrashIcon type="button">
+        <Trash />
+      </StyledTrashIcon>
+    </Wrapper>
+  )
+}
 
 export default BookItem

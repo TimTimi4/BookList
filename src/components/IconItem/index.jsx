@@ -13,12 +13,12 @@ const StyledIconInner = styled.div`
   position: absolute;
   top: 11px;
   left: 10px;
-  color: ${({ theme }) => theme.colors.unactive};
+  color: ${({ isFavorite, theme }) => (isFavorite ? theme.colors.like : theme.colors.unactive)};
 `
 
-const IconItem = ({ children, className, type, onClick, style }) => (
+const IconItem = ({ children, className, type, onClick, isFavorite }) => (
   <StyledIcon className={className} type={type} onClick={onClick}>
-    <StyledIconInner style={style}>
+    <StyledIconInner isFavorite={isFavorite}>
       { children }
     </StyledIconInner>
   </StyledIcon>
