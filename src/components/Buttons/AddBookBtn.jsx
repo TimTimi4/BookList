@@ -13,10 +13,10 @@ const StyledButton = styled.button`
   display: block;
 `
 
-const Button = ({ children, className, type, onClick }) => (
+const AddBookBtn = ({ children, className, type, onClick }) => (
   <StyledButton className={className} type={type} onClick={onClick}>
     { children }
   </StyledButton>
 )
 
-export default Button
+export default AddBookBtn

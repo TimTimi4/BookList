@@ -3,7 +3,7 @@ import Theme from './styles/theme'
 import Container from './components/Container'
 import MainTitle from './components/MainTitle'
 import BookRow from './components/BookRow'
-import Button from './components/Button'
+import AddBookBtn from './components/Buttons/AddBookBtn'
 
 const App = () => {
   const [books, setBooks] = useState([])
@@ -21,7 +21,7 @@ const App = () => {
       <Container>
         <MainTitle>Book List</MainTitle>
         <BookRow list={books} />
-        <Button type="button">Добавить книгу</Button>
+        <AddBookBtn type="button">Добавить книгу</AddBookBtn>
       </Container>
     </Theme>
   )
