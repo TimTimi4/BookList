@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import BookItem from '../BookItem'
 
 const Wrapper = styled.div`
-  width: 100%;
+  display: flex;
+  justify-content: space-between; 
+  flex-wrap: wrap;
 `
 
 const BookRow = ({ list }) => (

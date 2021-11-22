@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import IconItem from '../IconItem'
+import IconBtn from '../Buttons/IconBtn'
 import Like from '../Icons/Like'
 import Trash from '../Icons/Trash'
 
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   position: relative;
   min-height: 180px;
 `
-const StyledBookName = styled.div`
+const BookName = styled.div`
   font-weight: 700;
   max-width: 290px;
   padding: 28px 0px 0px 0px;
@@ -26,12 +26,12 @@ const StyledAuthor = styled.div`
   font-size: ${({ theme }) => theme.sizes.fonts.author};
 
 `
-const StyledLikeIcon = styled(IconItem)`
+const StyledLikeIcon = styled(IconBtn)`
   position: absolute;
   right: 31px;
   top: 28px;
 `
-const StyledTrashIcon = styled(IconItem)`
+const StyledTrashIcon = styled(IconBtn)`
   position: absolute;
   right: 31px;
   bottom: 31px;
@@ -42,16 +42,16 @@ const BookItem = ({ name, author, isFavorite }) => (
 // const [loading, setLoading] = useState(false)
 // const [error, setError] = useState('')
   <Wrapper>
-    <StyledBookName>
+    <BookName>
       {name}
-    </StyledBookName>
+    </BookName>
     <StyledAuthor>
       {author}
     </StyledAuthor>
-    <StyledLikeIcon type="button" isFavorite={isFavorite}>
+    <StyledLikeIcon isFavorite={isFavorite}>
       <Like />
     </StyledLikeIcon>
-    <StyledTrashIcon type="button">
+    <StyledTrashIcon>
       <Trash />
     </StyledTrashIcon>
   </Wrapper>

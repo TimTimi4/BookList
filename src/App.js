@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import Theme from './styles/theme'
 import Container from './components/Container'
-import MainTitle from './components/MainTitle'
 import BookRow from './components/BookRow'
 import AddBookBtn from './components/Buttons/AddBookBtn'
+
+const MainTitle = styled.h2`
+  font-size: ${({ theme }) => theme.sizes.fonts.mainTitle};
+  font-weight: 400;
+  text-align: center;
+`
 
 const App = () => {
   const [books, setBooks] = useState([])
@@ -19,7 +25,7 @@ const App = () => {
   return (
     <Theme>
       <Container>
-        <MainTitle>Book List</MainTitle>
+        <MainTitle>Список книг</MainTitle>
         <BookRow list={books} />
         <AddBookBtn type="button">Добавить книгу</AddBookBtn>
       </Container>
