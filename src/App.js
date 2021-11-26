@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import Theme from './styles/theme'
 import Container from './components/Container'
 import BookRow from './components/BookRow'
-import AddBookBtn from './components/Buttons/AddBookBtn'
+import PrimaryBtn from './components/Buttons/PrimaryBtn'
 import CreateModal from './components/CreateModal'
+import EditModal from './components/EditModal'
 
 const MainTitle = styled.h2`
   font-size: ${({ theme }) => theme.sizes.fonts.mainTitle};
@@ -12,8 +13,17 @@ const MainTitle = styled.h2`
   text-align: center;
 `
 
+const StyledPrimaryBtn = styled(PrimaryBtn)`
+  margin: 60px auto 0px auto;
+`
+
 const App = () => {
   const [isShowCreateModal, setShowCreateModal] = useState(false)
+  const [isShowEditModal, setShowEditModal] = useState(false)
+  const [bookName, setBookName] = useState('')
+  const [authorName, setAuthorName] = useState('')
+  const [isLike, setLike] = useState('')
+
   const [books, setBooks] = useState([])
   useEffect(() => {
     fetch('http://localhost:1717/books')
@@ -23,20 +33,52 @@ const App = () => {
       })
   }, [])
 
+  const addBook = ({ addedBookName, addedAuthorName }) => {
+    const book = {}
+    book.name = addedBookName
+    book.author = addedAuthorName
+    books.push(book)
+    fetch('http://localhost:1717/books/create', {
+      method: 'POST',
+      body: JSON.stringify(book),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(() => {
+        setBooks(books)
+        setShowCreateModal(false)
+      })
+  }
+  const handleEdit = ({ name, author, isFavorite }) => {
+    setBookName(name)
+    setAuthorName(author)
+    setLike(isFavorite)
+    setShowEditModal(true)
+  }
+
   return (
     <Theme>
       <Container>
         <MainTitle>Список книг</MainTitle>
-        <BookRow list={books} />
-        <AddBookBtn
+        <BookRow list={books} onEdit={handleEdit} />
+        <StyledPrimaryBtn
           onClick={() => setShowCreateModal(true)}
           type="button"
         >
           Добавить книгу
-        </AddBookBtn>
+        </StyledPrimaryBtn>
         <CreateModal
-          isOpen={isShowCreateModal}
+          isShow={isShowCreateModal}
           onClose={() => setShowCreateModal(false)}
+          addBook={addBook}
+        />
+        <EditModal
+          isShow={isShowEditModal}
+          onClose={() => setShowEditModal(false)}
+          name={bookName}
+          author={authorName}
+          isFavorite={isLike}
         />
       </Container>
     </Theme>

@@ -5,12 +5,13 @@ const theme = {
   colors:
     {
       bg: '#E5E5E5',
-      iconbg: '#EDEDED;',
+      iconbg: '#EDEDED',
       unactive: '#B1B1B1',
       like: '#EB434D',
       textPrimary: '#000000',
       textSecondary: '#000000',
-      button: '#287F9A',
+      primaryBtn: '#287F9A',
+      deleteBtn: '#EDEDED',
     },
   sizes:
     {
@@ -28,7 +29,7 @@ const theme = {
       fonts:
         {
           mainTitle: '44px',
-          bookName: '20px',
+          primary: '20px',
           author: '16px',
           button: '20px',
           infoMessage: '12px',

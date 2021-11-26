@@ -1,17 +1,21 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  visibility: visible;
 `
 
-const Container = styled.div`
+const Inner = styled.div`
   max-width: ${({ theme }) => theme.sizes.blocks.modalwindow};
   background: #FFFFFF;
   border-radius: 10px;
   padding: 55px;
-  position: relative;
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%);
   z-index: 20;
-
+  transition: all 0.6s;
+  visibility: ${({ isShow }) => (isShow ? 'visible' : 'hidden')};
+  opacity: ${({ isShow }) => (isShow ? '1' : '0')};
 `
 const CloseModalArea = styled.div`
   background-color: #000;
@@ -23,14 +27,17 @@ const CloseModalArea = styled.div`
   height: 100%;
   opacity: 0.6;
   z-index: 10;
+  transition: all 0.6s;
+  visibility: ${({ isShow }) => (isShow ? 'visible' : 'hidden')};
+  opacity: ${({ isShow }) => (isShow ? '0.6' : '0')};
 `
 
 const Modal = ({ isShow, onClose, children }) => (
-  <Wrapper isShow={isShow}>
+  <Wrapper>
     <CloseModalArea isShow={isShow} onClick={onClose} />
-    <Container isShow={isShow}>
+    <Inner isShow={isShow}>
       {children}
-    </Container>
+    </Inner>
   </Wrapper>
 )
 
