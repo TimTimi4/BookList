@@ -46,10 +46,11 @@ const Error = styled.div`
   font-size: ${({ theme }) => theme.sizes.fonts.infoMessage};
 `
 
-const BookItem = ({ id, name, author, isFavorite, onEdit, deleteBook }) => {
+const BookItem = ({ id, name, author, isFavorite, onEdit }) => {
   const [isLike, setLike] = useState(isFavorite)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isDelete, setDelete] = useState(true)
 
   const handleChangeFavorite = (e) => {
     e.stopPropagation()
@@ -77,7 +78,17 @@ const BookItem = ({ id, name, author, isFavorite, onEdit, deleteBook }) => {
     onEdit({ name, author, isFavorite })
   }
 
+  const deleteBook = (e) => {
+    e.stopPropagation()
+    fetch(`http://localhost:1717/books/delete/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      setDelete(false)
+    })
+  }
+
   return (
+    isDelete && (
     <Wrapper onClick={handleEdit}>
       <BookName>
         {name}
@@ -93,6 +104,7 @@ const BookItem = ({ id, name, author, isFavorite, onEdit, deleteBook }) => {
         <Trash />
       </StyledTrashIcon>
     </Wrapper>
+    )
   )
 }
 export default BookItem
