@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
+import { useEffect } from 'react/cjs/react.development'
 import PrimaryBtn from '../Buttons/PrimaryBtn'
 import Modal from '../Modal'
 import IconBtn from '../Buttons/IconBtn'
@@ -43,13 +44,18 @@ const StyledDeleteBtn = styled(DeleteBtn)`
   margin: 15px auto 0px auto;
 `
 
-const EditModal = ({ isShow, onClose, isFavorite, name, author }) => {
+const EditModal = ({ isShow, onClose, isFavorite, name, author, id }) => {
   const [bookName, setBookName] = useState(name)
   const [authorName, setAuthorName] = useState(author)
   const [isLike, setLike] = useState(isFavorite)
 
+  useEffect(() => {
+    setBookName(name)
+    setAuthorName(author)
+  }, [name, author])
+
   const handleClick = () => {
-    setLike(!setLike)
+    setLike(!isLike)
   }
 
   const handleChangeName = (e) => {
@@ -58,6 +64,16 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author }) => {
 
   const handleChangeAuthor = (e) => {
     setAuthorName(e.target.value)
+  }
+
+  const handleSave = () => {
+    fetch(`http://localhost:1717/books/update/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ bookName, authorName, isLike }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }
 
   return (
@@ -72,7 +88,7 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author }) => {
         <StyledInput type="text" name="name" placeholder="Название" value={bookName} onChange={handleChangeName} />
         <StyledInput type="text" name="author" placeholder="Автор" value={authorName} onChange={handleChangeAuthor} />
         <StyledDeleteBtn>Удалить</StyledDeleteBtn>
-        <StyledPrimaryBtn>Сохранить изменения</StyledPrimaryBtn>
+        <StyledPrimaryBtn onClick={handleSave}>Сохранить изменения</StyledPrimaryBtn>
       </StyledForm>
     </Modal>
   )

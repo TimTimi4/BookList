@@ -22,6 +22,7 @@ const App = () => {
   const [isShowEditModal, setShowEditModal] = useState(false)
   const [bookName, setBookName] = useState('')
   const [authorName, setAuthorName] = useState('')
+  const [bookId, setBookId] = useState('')
   const [isLike, setLike] = useState('')
 
   const [books, setBooks] = useState([])
@@ -50,10 +51,11 @@ const App = () => {
         setShowCreateModal(false)
       })
   }
-  const handleEdit = ({ name, author, isFavorite }) => {
+  const handleEdit = ({ name, author, isFavorite, id }) => {
     setBookName(name)
     setAuthorName(author)
     setLike(isFavorite)
+    setBookId(id)
     setShowEditModal(true)
   }
 
@@ -77,6 +79,7 @@ const App = () => {
           isShow={isShowEditModal}
           onClose={() => setShowEditModal(false)}
           name={bookName}
+          id={bookId}
           author={authorName}
           isFavorite={isLike}
         />
