@@ -8,9 +8,6 @@ const Wrapper = styled.div`
   min-width: ${({ theme }) => theme.sizes.blocks.item};
   margin: 0px 0px 29px 0px;
   cursor: pointer;
-  &:last-child{
-    margin: 0px 0px 0px 0px;
-  }
   background: #FFFFFF;
   border-radius: 10px;
   position: relative;
@@ -75,7 +72,7 @@ const BookItem = ({ id, name, author, isFavorite, onEdit }) => {
   }
 
   const handleEdit = () => {
-    onEdit({ name, author, isFavorite, id })
+    onEdit({ name, author, isFavorite })
   }
 
   const deleteBook = (e) => {

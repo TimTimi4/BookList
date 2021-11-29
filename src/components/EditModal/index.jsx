@@ -69,11 +69,14 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id }) => {
   const handleSave = () => {
     fetch(`http://localhost:1717/books/update/${id}`, {
       method: 'PUT',
-      body: JSON.stringify({ bookName, authorName, isLike }),
+      body: JSON.stringify({ name: bookName, author: authorName, isFavorite: isLike }),
       headers: {
         'Content-Type': 'application/json',
       },
     })
+      .then(() => {
+        onClose()
+      })
   }
 
   return (
@@ -85,10 +88,25 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id }) => {
         </IconBtn>
       </StyledHeader>
       <StyledForm action="#">
-        <StyledInput type="text" name="name" placeholder="Название" value={bookName} onChange={handleChangeName} />
-        <StyledInput type="text" name="author" placeholder="Автор" value={authorName} onChange={handleChangeAuthor} />
+        <StyledInput
+          type="text"
+          name="name"
+          placeholder="Название"
+          value={bookName}
+          onChange={handleChangeName}
+        />
+        <StyledInput
+          type="text"
+          name="author"
+          placeholder="Автор"
+          value={authorName}
+          onChange={handleChangeAuthor}
+        />
         <StyledDeleteBtn>Удалить</StyledDeleteBtn>
-        <StyledPrimaryBtn onClick={handleSave}>Сохранить изменения</StyledPrimaryBtn>
+        <StyledPrimaryBtn
+          onClick={handleSave}
+        >Сохранить изменения
+        </StyledPrimaryBtn>
       </StyledForm>
     </Modal>
   )
