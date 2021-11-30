@@ -6,6 +6,7 @@ import Modal from '../Modal'
 import IconBtn from '../Buttons/IconBtn'
 import Like from '../Icons/Like'
 import DeleteBtn from '../Buttons/DeleteBtn'
+import { deleteBook, editBook } from '../../services/api'
 
 const StyledTitle = styled.h3`
   margin: 0px 0px 0px 0px;
@@ -44,7 +45,7 @@ const StyledDeleteBtn = styled(DeleteBtn)`
   margin: 15px auto 0px auto;
 `
 
-const EditModal = ({ isShow, onClose, isFavorite, name, author, id }) => {
+const EditModal = ({ isShow, onClose, isFavorite, name, author, id, hideBookItem, setBooks }) => {
   const [bookName, setBookName] = useState(name)
   const [authorName, setAuthorName] = useState(author)
   const [isLike, setLike] = useState(isFavorite)
@@ -67,15 +68,19 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id }) => {
   }
 
   const handleSave = () => {
-    fetch(`http://localhost:1717/books/update/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ name: bookName, author: authorName, isFavorite: isLike }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const data = { name: bookName, author: authorName, isFavorite: isLike }
+    editBook(id, data)
       .then(() => {
         onClose()
+        setBooks((prev) => prev.map((book) => (book.id === id ? { ...book, ...data } : book)))
+      })
+  }
+
+  const handleDelete = () => {
+    deleteBook(id)
+      .then(() => {
+        onClose()
+        hideBookItem(id)
       })
   }
 
@@ -102,7 +107,7 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id }) => {
           value={authorName}
           onChange={handleChangeAuthor}
         />
-        <StyledDeleteBtn>Удалить</StyledDeleteBtn>
+        <StyledDeleteBtn onClick={handleDelete}>Удалить</StyledDeleteBtn>
         <StyledPrimaryBtn
           onClick={handleSave}
         >Сохранить изменения
