@@ -1,5 +1,6 @@
 import { useState } from 'react/cjs/react.development'
 import styled from 'styled-components'
+import { deleteBook, editBook } from '../../services/api'
 import IconBtn from '../Buttons/IconBtn'
 import Like from '../Icons/Like'
 import Trash from '../Icons/Trash'
@@ -43,22 +44,15 @@ const Error = styled.div`
   font-size: ${({ theme }) => theme.sizes.fonts.infoMessage};
 `
 
-const BookItem = ({ id, name, author, isFavorite, onEdit }) => {
+const BookItem = ({ id, name, author, isFavorite, onEdit, isHide, hideBookItem }) => {
   const [isLike, setLike] = useState(isFavorite)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [isDelete, setDelete] = useState(true)
 
   const handleChangeFavorite = (e) => {
     e.stopPropagation()
     setLoading(true)
-    fetch(`http://localhost:1717/books/update/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ isFavorite: !isLike }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    editBook(id, { isFavorite: !isLike })
       .then(() => {
         setLike(!isLike)
         setError('')
@@ -75,17 +69,15 @@ const BookItem = ({ id, name, author, isFavorite, onEdit }) => {
     onEdit({ name, author, isFavorite, id })
   }
 
-  const deleteBook = (e) => {
+  const handleDelete = (e) => {
     e.stopPropagation()
-    fetch(`http://localhost:1717/books/delete/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
-      setDelete(false)
+    deleteBook(id).then(() => {
+      hideBookItem(id)
     })
   }
 
   return (
-    isDelete && (
+    !isHide && (
     <Wrapper onClick={handleEdit}>
       <BookName>
         {name}
@@ -97,7 +89,7 @@ const BookItem = ({ id, name, author, isFavorite, onEdit }) => {
         {loading ? '?' : <Like />}
       </StyledLikeIcon>
       <Error>{error}</Error>
-      <StyledTrashIcon onClick={deleteBook}>
+      <StyledTrashIcon onClick={handleDelete}>
         <Trash />
       </StyledTrashIcon>
     </Wrapper>
