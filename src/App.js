@@ -58,6 +58,8 @@ const App = () => {
     setShowEditModal(true)
   }
 
+  console.log(books)
+
   return (
     <Theme>
       <Container>

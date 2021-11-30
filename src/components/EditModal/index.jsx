@@ -53,7 +53,8 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id, hideBookItem
   useEffect(() => {
     setBookName(name)
     setAuthorName(author)
-  }, [name, author])
+    setLike(isFavorite)
+  }, [name, author, isFavorite])
 
   const handleClick = () => {
     setLike(!isLike)
@@ -69,6 +70,7 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id, hideBookItem
 
   const handleSave = () => {
     const data = { name: bookName, author: authorName, isFavorite: isLike }
+    console.log(data)
     editBook(id, data)
       .then(() => {
         onClose()
