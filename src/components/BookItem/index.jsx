@@ -72,7 +72,7 @@ const BookItem = ({ id, name, author, isFavorite, onEdit }) => {
   }
 
   const handleEdit = () => {
-    onEdit({ name, author, isFavorite })
+    onEdit({ name, author, isFavorite, id })
   }
 
   const deleteBook = (e) => {
