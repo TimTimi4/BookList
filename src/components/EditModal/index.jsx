@@ -45,7 +45,7 @@ const StyledDeleteBtn = styled(DeleteBtn)`
   margin: 15px auto 0px auto;
 `
 
-const EditModal = ({ isShow, onClose, isFavorite, name, author, id, hideBookItem }) => {
+const EditModal = ({ isShow, onClose, isFavorite, name, author, id, hideBookItem, setBooks }) => {
   const [bookName, setBookName] = useState(name)
   const [authorName, setAuthorName] = useState(author)
   const [isLike, setLike] = useState(isFavorite)
@@ -68,9 +68,11 @@ const EditModal = ({ isShow, onClose, isFavorite, name, author, id, hideBookItem
   }
 
   const handleSave = () => {
-    editBook(id, { name: bookName, author: authorName, isFavorite: isLike })
+    const data = { name: bookName, author: authorName, isFavorite: isLike }
+    editBook(id, data)
       .then(() => {
         onClose()
+        setBooks((prev) => prev.map((book) => (book.id === id ? { ...book, ...data } : book)))
       })
   }
 

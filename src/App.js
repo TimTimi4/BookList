@@ -87,6 +87,7 @@ const App = () => {
           author={authorName}
           isFavorite={isLike}
           hideBookItem={hideBookItem}
+          setBooks={setBooks}
         />
       </Container>
     </Theme>
