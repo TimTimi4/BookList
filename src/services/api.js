@@ -12,13 +12,11 @@ export const createBook = (body) => fetch(`${ENDPOINT}/books/create`, {
   headers,
 })
 
-export const editBook = (id, body) => {
-  fetch(`${ENDPOINT}/books/update/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(body),
-    headers,
-  })
-}
+export const editBook = (id, body) => fetch(`${ENDPOINT}/books/update/${id}`, {
+  method: 'PUT',
+  body: JSON.stringify(body),
+  headers,
+})
 
 export const deleteBook = (id) => fetch(`${ENDPOINT}/books/delete/${id}`, {
   method: 'DELETE',
