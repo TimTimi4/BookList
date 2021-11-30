@@ -6,6 +6,7 @@ import BookRow from './components/BookRow'
 import PrimaryBtn from './components/Buttons/PrimaryBtn'
 import CreateModal from './components/CreateModal'
 import EditModal from './components/EditModal'
+import { createBook, getBooks } from './services/api'
 
 const MainTitle = styled.h2`
   font-size: ${({ theme }) => theme.sizes.fonts.mainTitle};
@@ -25,10 +26,14 @@ const App = () => {
   const [bookId, setBookId] = useState('')
   const [isLike, setLike] = useState('')
   const [books, setBooks] = useState([])
+  const [hiddenBooks, setHiddenBooks] = useState([])
+
+  const hideBookItem = (id) => {
+    setHiddenBooks((prev) => [...prev, id])
+  }
 
   useEffect(() => {
-    fetch('http://localhost:1717/books')
-      .then((res) => res.json())
+    getBooks()
       .then((data) => {
         setBooks(data)
       })
@@ -39,13 +44,7 @@ const App = () => {
     book.name = addedBookName
     book.author = addedAuthorName
     books.push(book)
-    fetch('http://localhost:1717/books/create', {
-      method: 'POST',
-      body: JSON.stringify(book),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    createBook(book)
       .then(() => {
         setBooks(books)
         setShowCreateModal(false)
@@ -63,7 +62,12 @@ const App = () => {
     <Theme>
       <Container>
         <MainTitle>Список книг</MainTitle>
-        <BookRow list={books} onEdit={handleEdit} />
+        <BookRow
+          list={books}
+          onEdit={handleEdit}
+          hiddenBooks={hiddenBooks}
+          hideBookItem={hideBookItem}
+        />
         <StyledPrimaryBtn
           onClick={() => setShowCreateModal(true)}
           type="button"
@@ -82,6 +86,7 @@ const App = () => {
           id={bookId}
           author={authorName}
           isFavorite={isLike}
+          hideBookItem={hideBookItem}
         />
       </Container>
     </Theme>

@@ -7,11 +7,13 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 `
 
-const BookRow = ({ list, onEdit }) => (
+const BookRow = ({ list, onEdit, hiddenBooks, hideBookItem }) => (
   <Wrapper>
     {
       list.map((item) => (
         <BookItem
+          isHide={hiddenBooks.includes(item.id)}
+          hideBookItem={hideBookItem}
           onEdit={onEdit}
           key={item.id}
           id={item.id}
